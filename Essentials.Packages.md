@@ -4,6 +4,6 @@
 * you can have any number of modules you want
 * you can import the methods and use them from other packages written by other developers or located in Go standard libraries using import (for instance, import "fmt")
 
-# Main Module
+# The "Main" Package
 * main module is a special module
 * it has the special entry point in your application
