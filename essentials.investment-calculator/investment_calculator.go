@@ -7,8 +7,9 @@ import (
 
 func main() {
 	initial_func()
-	explicit_type_annotation_calculator()
-	alternative_variable_declaration_calculator()
+	investment_calculator_with_inflation()
+	// explicit_type_annotation_calculator()
+	// alternative_variable_declaration_calculator()
 }
 
 func initial_func() {
@@ -39,4 +40,15 @@ func alternative_variable_declaration_calculator() {
 	futureValue := investmentAmount * math.Pow(1+expectedReturnRate/100, years) // same here, we dont use var, instead we use assignment using ":="
 	fmt.Print(futureValue)
 	fmt.Println("  string test  ", string1, int1)
+}
+
+func investment_calculator_with_inflation() {
+	var investmentAmount float64 = 1000 // explicitly declare the format
+	var expectedReturnRate = 5.5
+	var years float64 = 10
+	const inflationRate = 2.5
+
+	var futureValue = investmentAmount * math.Pow(1+expectedReturnRate/100, years)
+	var futurRealValueIncludingInflation = futureValue / math.Pow(1+inflationRate/100, years)
+	fmt.Println("return rate with inflation: ", futurRealValueIncludingInflation)
 }
