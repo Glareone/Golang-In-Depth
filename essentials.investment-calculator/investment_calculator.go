@@ -6,10 +6,11 @@ import (
 )
 
 func main() {
-	initial_func()
-	investment_calculator_with_inflation()
+	// initial_func()
+	// investment_calculator_with_inflation()
 	// explicit_type_annotation_calculator()
 	// alternative_variable_declaration_calculator()
+	investment_calculator_with_inflation_user_input()
 }
 
 func initial_func() {
@@ -43,12 +44,33 @@ func alternative_variable_declaration_calculator() {
 }
 
 func investment_calculator_with_inflation() {
-	var investmentAmount float64 = 1000 // explicitly declare the format
+	const investmentAmount float64 = 1000 // explicitly declare the format
 	var expectedReturnRate = 5.5
-	var years float64 = 10
+	years := 10
 	const inflationRate = 2.5
 
-	var futureValue = investmentAmount * math.Pow(1+expectedReturnRate/100, years)
-	var futurRealValueIncludingInflation = futureValue / math.Pow(1+inflationRate/100, years)
-	fmt.Println("return rate with inflation: ", futurRealValueIncludingInflation)
+	var futureValue = investmentAmount * math.Pow(1+expectedReturnRate/100, float64(years))
+	var futureRealValueIncludingInflation = futureValue / math.Pow(1+inflationRate/100, float64(years))
+	fmt.Println("return rate with inflation: ", futureRealValueIncludingInflation)
+}
+
+func investment_calculator_with_inflation_user_input() {
+	var investmentAmount float64
+	var expectedReturnRate = 5.5
+	var years int32
+	var inflationRate float64 = 2.5
+
+	fmt.Print("Investment Amount is: ")
+	fmt.Scan(&investmentAmount)
+
+	fmt.Print("Number of years: ")
+	fmt.Scan(&years)
+
+	fmt.Print("Expected Return Rate is: ")
+	fmt.Scan(&expectedReturnRate)
+
+	var futureValue = investmentAmount * math.Pow(1+expectedReturnRate/100, float64(years))
+	var futureRealValueIncludingInflation = futureValue / math.Pow(1+inflationRate/100, float64(years))
+	fmt.Println("return rate without inflation: ", futureValue)
+	fmt.Println("return rate with inflation: ", futureRealValueIncludingInflation)
 }
