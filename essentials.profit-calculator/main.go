@@ -20,7 +20,9 @@ func main() {
 	var earningsAfterTax float64 = earningsBeforeTax * (1 - taxRatePercent/100)
 	var earningsRatio = earningsBeforeTax / earningsAfterTax
 
-	fmt.Println("Earnings Before Tax: ", earningsBeforeTax)
-	fmt.Println("Earnings After Tax: ", earningsAfterTax)
-	fmt.Println("Earnings Ratio: ", earningsRatio)
+	// formatted and not formatted output
+	//fmt.Println("Earnings Before Tax: ", earningsBeforeTax)
+	//fmt.Println("Earnings After Tax: ", earningsAfterTax)
+	//fmt.Println("Earnings Ratio: ", earningsRatio)
+	fmt.Printf("Earnings Before Tax: %v\nEarnings After Tax: %v\nEarnings Ratio: %v\n", earningsBeforeTax, earningsAfterTax, earningsRatio)
 }
