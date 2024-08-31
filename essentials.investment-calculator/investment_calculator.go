@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"golang-essentials.com/investment-calculator/common"
 	"math"
 )
 
@@ -10,7 +11,8 @@ func main() {
 	// investment_calculator_with_inflation()
 	// explicit_type_annotation_calculator()
 	// alternative_variable_declaration_calculator()
-	investment_calculator_with_inflation_user_input()
+	// investment_calculator_with_inflation_user_input()
+	investment_calculator_using_exported_function()
 }
 
 func initial_func() {
@@ -73,4 +75,15 @@ func investment_calculator_with_inflation_user_input() {
 	var futureRealValueIncludingInflation = futureValue / math.Pow(1+inflationRate/100, float64(years))
 	fmt.Println("return rate without inflation: ", futureValue)
 	fmt.Println("return rate with inflation: ", futureRealValueIncludingInflation)
+}
+
+func investment_calculator_using_exported_function() {
+	var investmentAmount int = 10000
+	var expectedReturnRate = 5.5
+	var years int = 10
+	var inflationRate float64 = 2.5
+
+	var futureValue, realFutureValue = common.CalculateInvestmentAmountMultipleValues(investmentAmount, years, expectedReturnRate, inflationRate)
+	fmt.Println("return rate without inflation: ", futureValue)
+	fmt.Println("return rate with inflation: ", realFutureValue)
 }
