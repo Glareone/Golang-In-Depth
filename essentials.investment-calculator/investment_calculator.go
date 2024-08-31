@@ -81,6 +81,6 @@ func investment_calculator_using_exported_function() {
 	var investmentAmount, years, expectedReturnRate, inflationRate = common.HandleInput()
 
 	var futureValue, realFutureValue = common.CalculateInvestmentAmountMultipleValues(investmentAmount, years, expectedReturnRate, inflationRate)
-	fmt.Println("return rate without inflation: ", futureValue)
-	fmt.Println("return rate with inflation: ", realFutureValue)
+	fmt.Printf("return rate without inflation: %.2f \n", futureValue)
+	fmt.Printf("return rate with inflation: %.2f", realFutureValue)
 }
