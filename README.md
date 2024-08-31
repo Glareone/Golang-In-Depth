@@ -9,5 +9,7 @@ This repository is for Golang-related materials with examples
    - [String Formatting, output formatting. Sprintf, Println. Project_2: Profit Calculator](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.profit-calculator/main.go)
    - [if-else if-else](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.control-structure/main.go)
    - [General Project Structure](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.control-structure/main.go)
+   - [Separating Packages](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.investment-calculator/common/revenue_calculator.go)
+   - [functions. return several variables](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.investment-calculator/common/revenue_calculator.go)
 3. For Intermediate
 4. Backend Tricks
