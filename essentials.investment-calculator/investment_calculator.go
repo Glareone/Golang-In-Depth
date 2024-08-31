@@ -78,10 +78,7 @@ func investment_calculator_with_inflation_user_input() {
 }
 
 func investment_calculator_using_exported_function() {
-	var investmentAmount int = 10000
-	var expectedReturnRate = 5.5
-	var years int = 10
-	var inflationRate float64 = 2.5
+	var investmentAmount, years, expectedReturnRate, inflationRate = common.HandleInput()
 
 	var futureValue, realFutureValue = common.CalculateInvestmentAmountMultipleValues(investmentAmount, years, expectedReturnRate, inflationRate)
 	fmt.Println("return rate without inflation: ", futureValue)
