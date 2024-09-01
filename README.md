@@ -14,5 +14,6 @@ This repository is for Golang-related materials with examples
    - [loop. for. infinite loop. switch. labeled loop](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.control-structure/user-choice.go)
 2. Read and Write from files
    - [Read from the file](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.control-structure/working-with-files/read-from-file.go)
+   - [Write to the file](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.control-structure/working-with-files/writing-to-file.go)
 4. For Intermediate
 5. Backend Tricks
