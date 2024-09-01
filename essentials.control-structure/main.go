@@ -15,26 +15,7 @@ func main() {
 	fmt.Println("4: Exit the application")
 
 	fmt.Print("Your choice is: ")
-	var userChoice int
 
-	// if you input something unacceptable for this type - assignment will be ignored
-	// and userChoice will still be 0 (default value for int)
-	fmt.Scan(&userChoice)
-
-	if userChoice == 1 {
-		fmt.Println("Your balance is, ", dummyBalance)
-	} else if userChoice == 2 {
-		fmt.Print("How much do you want to deposit?")
-		fmt.Scan(&dummyUserDeposit)
-		dummyBalance += dummyUserDeposit
-		fmt.Print("Balance updated: Now your balance is: ", dummyBalance)
-	} else if userChoice == 3 {
-		fmt.Println("How much do you want to withdraw?")
-		var withdrawAmount float64
-		fmt.Scan(&withdrawAmount)
-		dummyBalance -= withdrawAmount
-		fmt.Println("New balance is ", dummyBalance)
-	} else {
-		fmt.Println("You chose exit! Goodbye!")
-	}
+	// UserChoiceHandler()
+	UserChoiceHandlerLoop()
 }
