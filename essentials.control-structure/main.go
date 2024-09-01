@@ -1,23 +1,20 @@
 package main
 
-import "fmt"
+import wwf "essentials.control-structure/working-with-files"
 
 // variables available in the whole file
+// in latest method it was replaced with real balance I read from the file
 var dummyBalance float64 = 10000
+
+// still used in functions
 var dummyUserDeposit float64 = 0
 
 func main() {
-	fmt.Println("Welcome to GO Bank!")
-	fmt.Println("What do you want to do?")
-	fmt.Println("1: Check the balance")
-	fmt.Println("2: Deposit money")
-	fmt.Println("3: Draw money")
-	fmt.Println("4: Exit the application")
-
-	fmt.Print("Your choice is: ")
+	var userBalance = wwf.GetBalanceFromFile()
 
 	// UserChoiceHandler()
 	// UserChoiceHandlerInfiniteLoop()
 	// UserChoiceHandlerConditionalLoop()
-	UserChoiceHandlerInfiniteLoopSwitch()
+	// UserChoiceHandlerInfiniteLoopSwitch()
+	UserChoiceHandlerInfiniteLoopWithWriteToFile(userBalance)
 }
