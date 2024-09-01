@@ -12,5 +12,7 @@ This repository is for Golang-related materials with examples
    - [Separating Packages](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.investment-calculator/common/input_handler.go)
    - [functions. return several variables](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.investment-calculator/common/revenue_calculator.go)
    - [loop. for. infinite loop. switch. labeled loop](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.control-structure/user-choice.go)
-3. For Intermediate
-4. Backend Tricks
+2. Read and Write from files
+   - [Read from the file](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.control-structure/working-with-files/read-from-file.go)
+4. For Intermediate
+5. Backend Tricks
