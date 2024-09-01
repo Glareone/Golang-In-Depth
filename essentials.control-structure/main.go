@@ -17,5 +17,7 @@ func main() {
 	fmt.Print("Your choice is: ")
 
 	// UserChoiceHandler()
-	UserChoiceHandlerLoop()
+	// UserChoiceHandlerInfiniteLoop()
+	// UserChoiceHandlerConditionalLoop()
+	UserChoiceHandlerInfiniteLoopSwitch()
 }
