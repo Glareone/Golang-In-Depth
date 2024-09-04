@@ -24,6 +24,7 @@ func GetBalanceFromFile() (float64, error) {
 
 	if parseBalanceError != nil {
 		// we dont want to proceed with command, and we use command to stop application execution!
+		// application crashes
 		panic("balance from the file cannot be converted properly")
 	}
 
