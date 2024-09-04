@@ -8,6 +8,8 @@ import (
 
 const predefinedBalance float64 = 1000
 
+// GetBalanceFromFile 
+// only Uppercase named function will be exported and could be used in other places of the application
 func GetBalanceFromFile() (float64, error) {
 	// I declare error variable as underscore _ to explicitly say i dont want to use it
 	userBalanceBytes, err := os.ReadFile(declaredFileName)
@@ -23,7 +25,7 @@ func GetBalanceFromFile() (float64, error) {
 	var userBalance, parseBalanceError = strconv.ParseFloat(balanceText, 64)
 
 	if parseBalanceError != nil {
-		// we dont want to proceed with command, and we use command to stop application execution!
+		// we don't want to proceed with command, and we use command to stop application execution!
 		// application crashes
 		panic("balance from the file cannot be converted properly")
 	}

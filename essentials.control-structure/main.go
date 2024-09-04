@@ -1,6 +1,7 @@
 package main
 
 import (
+	// importing consist of: alias "module-name/package-name"
 	wwf "essentials.control-structure/working-with-files"
 	"fmt"
 )
