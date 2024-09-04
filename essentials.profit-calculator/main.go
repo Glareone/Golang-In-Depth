@@ -1,20 +1,28 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 func main() {
-	var revenue int32
-	var expenses int32
-	var taxRatePercent float64
+	var revenue, revenueErr = getUserInput("Input Revenue: ")
+	var expenses, expensesError = getUserInput("Input Expenses: ")
+	var taxRatePercent, taxRatePercentError = getUserInput("Input Tax Rate Percentage: ")
 
-	fmt.Print("Input Revenue: ")
-	fmt.Scan(&revenue)
+	if revenueErr != nil || expensesError != nil || taxRatePercentError != nil {
+		if revenueErr != nil {
+			fmt.Println("Error! ", revenueErr)
+		}
+		if expensesError != nil {
+			fmt.Println("Error! ", expensesError)
+		}
+		if taxRatePercentError != nil {
+			fmt.Println("Error! ", taxRatePercentError)
+		}
 
-	fmt.Print("Input Expenses: ")
-	fmt.Scan(&expenses)
-
-	fmt.Print("Input Tax Rate Percentage: ")
-	fmt.Scan(&taxRatePercent)
+		panic("Unhandled error occurred during input!")
+	}
 
 	var earningsBeforeTax float64 = float64(revenue - expenses)
 	var earningsAfterTax float64 = earningsBeforeTax * (1 - taxRatePercent/100)
@@ -45,4 +53,16 @@ func main() {
 	var earningsAfterTaxFormattedOutput = fmt.Sprintf("Earnings After Tax: %.2f\n", earningsAfterTax)
 	var ratioFormattedOutput = fmt.Sprintf("Earnings Ratio: %.1f\n", earningsRatio)
 	fmt.Print(earningsBeforeTaxFormattedOutput, earningsAfterTaxFormattedOutput, ratioFormattedOutput)
+}
+
+func getUserInput(formattedText string) (float64, error) {
+	fmt.Println("Input Revenue: ")
+	var userInput float64
+	fmt.Scan(&userInput)
+
+	if userInput < 0 {
+		return 0, errors.New("user input is below zero, it was replaced with 0")
+	}
+
+	return userInput, nil
 }
