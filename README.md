@@ -17,6 +17,7 @@ This repository is for Golang-related materials with examples
    - [Write to the file](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.control-structure/working-with-files/writing-to-file.go)
 3. Error Handling
    - [Graceful handling and panic (crashing the app)](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.control-structure/working-with-files/read-from-file.go)
+   - [Example 2 with panic and error as second return parameter](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.profit-calculator/main.go)
      
 5. For Intermediate
 6. Backend Tricks
