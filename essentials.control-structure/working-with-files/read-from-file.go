@@ -1,17 +1,31 @@
 package working_with_files
 
 import (
+	"errors"
 	"os"
 	"strconv"
 )
 
-func GetBalanceFromFile() float64 {
+const predefinedBalance float64 = 1000
+
+func GetBalanceFromFile() (float64, error) {
 	// I declare error variable as underscore _ to explicitly say i dont want to use it
-	userBalanceBytes, _ := os.ReadFile(declaredFileName)
+	userBalanceBytes, err := os.ReadFile(declaredFileName)
+
+	if err != nil {
+		// gracefully handle the occurred and continue
+		return predefinedBalance, errors.New("file cannot be read")
+	}
+
 	balanceText := string(userBalanceBytes)
 
-	// here again I dont want to receive errors from the method, instead I omit it using underscore _
-	userBalance, _ := strconv.ParseFloat(balanceText, 64)
+	// error could be omit using _ underscore
+	var userBalance, parseBalanceError = strconv.ParseFloat(balanceText, 64)
 
-	return userBalance
+	if parseBalanceError != nil {
+		// we dont want to proceed with command, and we use command to stop application execution!
+		panic("balance from the file cannot be converted properly")
+	}
+
+	return userBalance, nil
 }
