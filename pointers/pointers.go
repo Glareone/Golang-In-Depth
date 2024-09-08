@@ -55,6 +55,6 @@ func isAdultInYearsPointer(age *int) bool {
 
 func mutationExample(age *int) (int, *int) {
 	*age = *age - 18
-	return *age, age // even though we send the pointer back, Go implicitly makes a copy of the pointer and send it back. 
+	return *age, age // even though we send the pointer back, Go implicitly makes a copy of the pointer and send it back.
 	// I will have several pointers which point to one value newage.
 }
