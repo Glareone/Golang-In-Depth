@@ -20,6 +20,6 @@ This repository is for Golang-related materials with examples
    - [General Project Structure. package alias/shortname](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.control-structure/main.go)
    - [Separating Packages](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.investment-calculator/common/input_handler.go)
    - [Exporting from the package](https://github.com/Glareone/Golang-Full-Course/blob/main/essentials.control-structure/working-with-files/read-from-file.go)
-   - [Work with 3rd party packages](IN PROGRESS)
+   - [Work with 3rd party packages. Dummy Data](https://github.com/Glareone/Golang-Full-Course/blob/main/3rdpartypackages/main.go)
 6. For Intermediate
 7. Backend Tricks
