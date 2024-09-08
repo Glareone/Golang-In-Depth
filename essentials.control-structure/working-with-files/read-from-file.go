@@ -8,7 +8,7 @@ import (
 
 const predefinedBalance float64 = 1000
 
-// GetBalanceFromFile 
+// GetBalanceFromFile
 // only Uppercase named function will be exported and could be used in other places of the application
 func GetBalanceFromFile() (float64, error) {
 	// I declare error variable as underscore _ to explicitly say i dont want to use it
