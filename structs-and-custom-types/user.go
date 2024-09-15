@@ -14,6 +14,30 @@ type User struct {
 	createdAt time.Time
 }
 
+// Creation Method
+// newUser - is just convention (or pattern), new+StructName, 
+// it's not a built-in feature in Go
+func newUser(firstName string, lastName string, birthDate string) *User {
+	// we return the pointer
+	// it prevents of making extra copies of the value
+	return &User{
+		firstName: firstName,
+		lastName:  lastName,
+		birthDate: birthDate,
+		createdAt: time.Now(),
+	}
+
+	// Returning User like this we after method invocation from another place we will return the copy of this instance
+	// Therefore we say we return the pointer from the method and use & ampersand like I showed above
+	//
+	//return User{
+	//	firstName: firstName,
+	//	lastName:  lastName,
+	//	birthDate: birthDate,
+	//	createdAt: time.Now(),
+	//}
+}
+
 // this function is attached to the original struct User
 // In parentheses I also use "Receiver Argument" (or just Receiver) in the name to get access to the properties within the User struct
 func (user User) OutputUserDetails() {
@@ -30,6 +54,7 @@ func (user *User) OutputUserDetailsAsterisk() {
 	fmt.Println("appUser: ", user.firstName, user.lastName, user.birthDate, user.createdAt)
 }
 
+// MUTATOR. WRONG USAGE. SHOULD BE USED WITH POINTER
 // using regular value here would be a problem because we change the values inside the copy
 // Go sends the copy to "Receiver Argument" as well if we dont use * asterisk
 func (user User) ClearUserName() {
@@ -38,6 +63,7 @@ func (user User) ClearUserName() {
 	user.birthDate = ""
 }
 
+// MUTATOR
 // you must use POINTER in Mutator methods because otherwise you mutate only the copy of "Receiver Argument", not original User Struct fields
 func (user *User) ClearUserNameAsterisk() {
 	user.firstName = ""
