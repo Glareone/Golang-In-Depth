@@ -23,5 +23,9 @@ This repository is for Golang-related materials with examples
    - [Work with 3rd party packages. Dummy Data](https://github.com/Glareone/Golang-Full-Course/blob/main/3rdpartypackages/main.go)
 5. Pointers
    - [Pointers. * and & symbols. Lots of examples](https://github.com/Glareone/Golang-Full-Course/blob/main/pointers/pointers.go)
-7. For Intermediate
-8. Backend Tricks
+   - [Pointers In Methods and Receiver Arguments](https://github.com/Glareone/Golang-Full-Course/blob/main/structs-and-custom-types/user.go)
+6. Structs
+   - [Struct. Constructor. Methods. Mutators. Pointers and where it's necessary](https://github.com/Glareone/Golang-Full-Course/blob/main/structs-and-custom-types/user.go)
+   - [Difference in struct usage](https://github.com/Glareone/Golang-Full-Course/blob/main/structs-and-custom-types/structs.go)
+8. For Intermediate
+9. Backend Tricks
