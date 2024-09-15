@@ -1,6 +1,9 @@
 package main
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 // making it upper case you make it available outside of this file
 // making local types you can use lowerCase custom type names
@@ -9,4 +12,35 @@ type User struct {
 	lastName  string
 	birthDate string
 	createdAt time.Time
+}
+
+// this function is attached to the original struct User
+// In parentheses I also use "Receiver Argument" (or just Receiver) in the name to get access to the properties within the User struct
+func (user User) OutputUserDetails() {
+	// "user" is a copy of the struct we sent to the function calling it with "outputUserDetails(appUser)"
+	// in order to use a pointer we need to change the declaration
+	// it is a shallow copy of the original struct
+	// here we use the copy of original user Struct
+	fmt.Println("appUser: ", user.firstName, user.lastName, user.birthDate, user.createdAt)
+}
+
+// it's possible to use * asterisk in such methods as well
+// to ensure that no extra memory occupied due to created copies
+func (user *User) OutputUserDetailsAsterisk() {
+	fmt.Println("appUser: ", user.firstName, user.lastName, user.birthDate, user.createdAt)
+}
+
+// using regular value here would be a problem because we change the values inside the copy
+// Go sends the copy to "Receiver Argument" as well if we dont use * asterisk
+func (user User) ClearUserName() {
+	user.firstName = ""
+	user.lastName = ""
+	user.birthDate = ""
+}
+
+// you must use POINTER in Mutator methods because otherwise you mutate only the copy of "Receiver Argument", not original User Struct fields
+func (user *User) ClearUserNameAsterisk() {
+	user.firstName = ""
+	user.lastName = ""
+	user.birthDate = ""
 }
