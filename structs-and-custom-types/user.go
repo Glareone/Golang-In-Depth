@@ -15,7 +15,7 @@ type User struct {
 }
 
 // Creation Method
-// newUser - is just convention (or pattern), new+StructName, 
+// newUser - is just convention (pattern), new+StructName,
 // it's not a built-in feature in Go
 func newUser(firstName string, lastName string, birthDate string) *User {
 	// we return the pointer
