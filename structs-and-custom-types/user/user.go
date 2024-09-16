@@ -20,7 +20,7 @@ type User struct {
 // Creation Method
 // newUser - is just convention (pattern), new+StructName,
 // it's not a built-in feature in Go
-func newUser(firstName string, lastName string, birthDate string) (*User, error) {
+func NewUser(firstName string, lastName string, birthDate string) (*User, error) {
 	// We can validate the input before sending the instance back
 	if firstName == "" || lastName == "" || birthDate == "" {
 		return nil, errors.New("wrong input")

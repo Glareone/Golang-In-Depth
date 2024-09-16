@@ -32,7 +32,7 @@ func main() {
 
 	// initialization using constructor
 	// error is omitted, therefore _
-	var appUserConstructor, _ = user.newUser(userFirstName, userLastName, userBirthdate)
+	var appUserConstructor, _ = user.NewUser(userFirstName, userLastName, userBirthdate)
 	fmt.Println("appUser2ShortHandInit: ", appUserConstructor.FirstName, appUserConstructor.LastName, appUserConstructor.BirthDate)
 
 	// Calling User method
