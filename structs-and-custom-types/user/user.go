@@ -19,10 +19,11 @@ type User struct {
 	CreatedAt time.Time // Exported
 
 	// it's also possible to create variables with the same name which are lower case
-	firstName string    // Unexported
-	lastName  string    // Unexported
-	birthDate string    // Unexported
-	createdAt time.Time // Unexported
+	// ======
+	// firstName string    // Unexported
+	// lastName  string    // Unexported
+	// birthDate string    // Unexported
+	// createdAt time.Time // Unexported
 }
 
 // Creation Method
