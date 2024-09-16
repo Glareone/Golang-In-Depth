@@ -11,10 +11,19 @@ import (
 type User struct {
 	// should start uppercase because otherwise they will be unavailable
 	// from the outside
-	FirstName string
-	LastName  string
-	BirthDate string
-	CreatedAt time.Time
+	// TIP: Ideally to have them unexported because it forces the end user to use newUser constructor
+	// instead of "new User{}" and have direct access to User's fields
+	FirstName string    // Exported
+	LastName  string    // Exported
+	BirthDate string    // Exported
+	CreatedAt time.Time // Exported
+
+	// it's also possible to create variables with the same name which are lower case
+	// ======
+	// firstName string    // Unexported
+	// lastName  string    // Unexported
+	// birthDate string    // Unexported
+	// createdAt time.Time // Unexported
 }
 
 // Creation Method

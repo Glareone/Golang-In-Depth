@@ -57,6 +57,11 @@ func main() {
 	outputUserDetailsPointer(&appUser2ShortHandInit)
 	fmt.Println("appUser2ShortHandInit: ", appUser2ShortHandInit.FirstName, appUser2ShortHandInit.LastName, appUser2ShortHandInit.BirthDate)
 	fmt.Println("appUser3EmptyStruct, User Struct to string:", appUser3EmptyStruct)
+
+	var admin = user.NewAdmin("", "")
+	// I can call only User here because it's uppercase in admin, and we are in the main package,
+	// Admin is in the user package, so lowercase fields are not available here
+	fmt.Println("admin user: ", admin.User.FirstName, admin.User.LastName)
 }
 
 // "user" is a shallow copy of the struct we sent to the function calling it with "outputUserDetails(appUser)"
