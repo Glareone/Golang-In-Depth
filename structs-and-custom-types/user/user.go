@@ -1,4 +1,4 @@
-package main
+package user
 
 import (
 	"errors"
@@ -9,10 +9,12 @@ import (
 // making it upper case you make it available outside of this file
 // making local types you can use lowerCase custom type names
 type User struct {
-	firstName string
-	lastName  string
-	birthDate string
-	createdAt time.Time
+	// should start uppercase because otherwise they will be unavailable
+	// from the outside
+	FirstName string
+	LastName  string
+	BirthDate string
+	CreatedAt time.Time
 }
 
 // Creation Method
@@ -27,10 +29,10 @@ func newUser(firstName string, lastName string, birthDate string) (*User, error)
 	// we return the pointer
 	// it prevents of making extra copies of the value
 	return &User{
-		firstName: firstName,
-		lastName:  lastName,
-		birthDate: birthDate,
-		createdAt: time.Now(),
+		FirstName: firstName,
+		LastName:  lastName,
+		BirthDate: birthDate,
+		CreatedAt: time.Now(),
 	}, nil
 
 	// Returning User like this we after method invocation from another place we will return the copy of this instance
@@ -51,28 +53,28 @@ func (user User) OutputUserDetails() {
 	// in order to use a pointer we need to change the declaration
 	// it is a shallow copy of the original struct
 	// here we use the copy of original user Struct
-	fmt.Println("appUser: ", user.firstName, user.lastName, user.birthDate, user.createdAt)
+	fmt.Println("appUser: ", user.FirstName, user.LastName, user.BirthDate, user.CreatedAt)
 }
 
 // it's possible to use * asterisk in such methods as well
 // to ensure that no extra memory occupied due to created copies
 func (user *User) OutputUserDetailsAsterisk() {
-	fmt.Println("appUser: ", user.firstName, user.lastName, user.birthDate, user.createdAt)
+	fmt.Println("appUser: ", user.FirstName, user.LastName, user.BirthDate, user.CreatedAt)
+}
+
+// MUTATOR
+// you must use POINTER in Mutator methods because otherwise you mutate only the copy of "Receiver Argument", not original User Struct fields
+func (user *User) ClearUserNameAsterisk() {
+	user.FirstName = ""
+	user.LastName = ""
+	user.BirthDate = ""
 }
 
 // MUTATOR. WRONG USAGE. SHOULD BE USED WITH POINTER
 // using regular value here would be a problem because we change the values inside the copy
 // Go sends the copy to "Receiver Argument" as well if we dont use * asterisk
 func (user User) ClearUserName() {
-	user.firstName = ""
-	user.lastName = ""
-	user.birthDate = ""
-}
-
-// MUTATOR
-// you must use POINTER in Mutator methods because otherwise you mutate only the copy of "Receiver Argument", not original User Struct fields
-func (user *User) ClearUserNameAsterisk() {
-	user.firstName = ""
-	user.lastName = ""
-	user.birthDate = ""
+	user.FirstName = ""
+	user.LastName = ""
+	user.BirthDate = ""
 }
