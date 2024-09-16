@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
@@ -17,7 +18,12 @@ type User struct {
 // Creation Method
 // newUser - is just convention (pattern), new+StructName,
 // it's not a built-in feature in Go
-func newUser(firstName string, lastName string, birthDate string) *User {
+func newUser(firstName string, lastName string, birthDate string) (*User, error) {
+	// We can validate the input before sending the instance back
+	if firstName == "" || lastName == "" || birthDate == "" {
+		return nil, errors.New("wrong input")
+	}
+
 	// we return the pointer
 	// it prevents of making extra copies of the value
 	return &User{
@@ -25,7 +31,7 @@ func newUser(firstName string, lastName string, birthDate string) *User {
 		lastName:  lastName,
 		birthDate: birthDate,
 		createdAt: time.Now(),
-	}
+	}, nil
 
 	// Returning User like this we after method invocation from another place we will return the copy of this instance
 	// Therefore we say we return the pointer from the method and use & ampersand like I showed above

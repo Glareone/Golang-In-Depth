@@ -26,7 +26,13 @@ func main() {
 		time.Now(),
 	}
 
+	// Empty instance
 	var appUser3EmptyStruct = User{}
+
+	// initialization using constructor
+	// error is omitted, therefore _
+	var appUserConstructor, _ = newUser(userFirstName, userLastName, userBirthdate)
+	fmt.Println("appUser2ShortHandInit: ", appUserConstructor.firstName, appUserConstructor.lastName, appUserConstructor.birthDate)
 
 	// Calling User method
 	fmt.Println("Calling appUser User method: ")
