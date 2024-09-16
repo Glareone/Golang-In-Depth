@@ -27,5 +27,7 @@ This repository is for Golang-related materials with examples
 6. Structs
    - [Struct. Constructor. Methods. Mutators. Pointers and where it's necessary](https://github.com/Glareone/Golang-Full-Course/blob/main/structs-and-custom-types/user.go)
    - [Difference in struct usage](https://github.com/Glareone/Golang-Full-Course/blob/main/structs-and-custom-types/structs.go)
+   - [Embedding. Struct Inside Struct](https://github.com/Glareone/Golang-Full-Course/blob/main/structs-and-custom-types/user/admin.go)
 8. For Intermediate
-9. Backend Tricks
+   - [Struct allocation on Stack and on Heap](in progress. Shortly - depends on pointer Escaping. If pointer never escapes the function - struct will be allocated on Stack. Otherwise on Heap)
+10. Backend Tricks
