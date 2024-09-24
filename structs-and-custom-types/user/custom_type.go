@@ -17,7 +17,7 @@ type customString string
 // Go also supports type aliases, which are more like nicknames for existing types:
 type myString = string // MyString is now an alias for string
 
-// The error "invalid receiver type 'string'" occurs because when you use (text myString), the compiler treats it as (text string), 
+// The error "invalid receiver type 'string'" occurs because when you use (text myString), the compiler treats it as (text string),
 // which is invalid because you cannot define a method with a receiver type from another package (string is from the fmt package).
 //
 //func (text myString) log() {
@@ -28,6 +28,7 @@ func (text customString) log() {
 	fmt.Println(text)
 }
 
+// Additional Example which demonstrates the difference how Golang treat different types
 func myFunc() {
 	var myString string = "Hello"
 	var myCustomString customString = "World"
