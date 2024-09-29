@@ -30,7 +30,11 @@ This repository is for Golang-related materials with examples
    - [Constructor Validation](https://github.com/Glareone/Golang-Full-Course/blob/main/structs-and-custom-types/user/user.go)
    - [Embedding. Struct Inside Struct](https://github.com/Glareone/Golang-Full-Course/blob/main/structs-and-custom-types/user/admin.go)
    - [lowercase and uppercase visibility within the package](https://github.com/Glareone/Golang-Full-Course/blob/main/structs-and-custom-types/user/admin.go)
-8. For Intermediate
+7. Interfaces
+   
+9. For Intermediate
    - [Struct allocation on Stack and on Heap](in progress. Shortly - depends on pointer Escaping. If pointer never escapes the function - struct will be allocated on Stack. Otherwise on Heap)  
    - [custom types and aliases using type](https://github.com/Glareone/Golang-Full-Course/blob/main/structs-and-custom-types/user/custom_type.go)
 10. Backend Tricks
+
+# Backend API Project using latest trends
