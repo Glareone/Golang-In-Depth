@@ -32,7 +32,8 @@ This repository is for Golang-related materials with examples
    - [lowercase and uppercase visibility within the package](https://github.com/Glareone/Golang-Full-Course/blob/main/structs-and-custom-types/user/admin.go)
 7. Interfaces
 8. Concurrency and Goroutines
-   - [Goroutines, Channels. Simple Examples with explanation](https://github.com/Glareone/Golang-Full-Course/blob/main/concurrency/main.go)  
+   - [Goroutines, Channels. Simple Examples with explanation](https://github.com/Glareone/Golang-Full-Course/blob/main/concurrency/main.go)
+   - [Goroutines and Error Handling](https://github.com/Glareone/Golang-Full-Course/blob/main/goroutines-with-errors/main.go)  
    
    
 10. For Intermediate
