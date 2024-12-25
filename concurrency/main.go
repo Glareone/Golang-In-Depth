@@ -87,7 +87,7 @@ func main() {
 		<-done
 	}
 
-	// =============== Multiple functions with only 1 Channel and special syntax
+	// =============== Multiple functions with only 1 Channel and special syntax ==========================================
 	var isDoneNewChannel = make(chan bool)
 	go fastFuncWithOneChannel("*async fast with channel* 1 call", isDoneNewChannel)
 	go slowOneFuncWithChannel("*slow async with channel* 2 function and await channel", isDoneNewChannel)
@@ -99,4 +99,21 @@ func main() {
 	for doneChannelItem := range isDoneNewChannel {
 		fmt.Println(doneChannelItem)
 	}
+
+	// ========== Create Several channels using Slice "[]chan" and "Make" ===============================================
+	// using slice keyword, without make. You can do this when you know the number of elements upfront
+	var doneSet = []chan bool{make(chan bool), make(chan bool)} // 2 channels
+
+	// allocate using make. You can also specify the number of elements you expect
+	// but you can append them later if needed
+	var doneSet2 = make([]chan bool, 2) // Creates a slice with 2 nil chan bool elements
+	doneSet2[0] = make(chan bool)
+	doneSet2[1] = make(chan bool)
+	// Later in your code:
+	newChan := make(chan bool)
+	doneSet = append(doneSet, newChan)
+	// append Always Works: You can use append to add elements to slices created with both slice literals and make.
+	// Slice Literals Can't Be Directly Indexed: You cannot directly assign values to indices beyond the initial length of a slice
+	// created with a literal (like in your example var doneSet = []chan bool { false, false }).
+	// You'll get an "index out of range" error.
 }
