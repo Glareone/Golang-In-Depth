@@ -57,7 +57,7 @@ func main() {
 	//<-isDoneChannel
 	fmt.Println(<-isDoneChannel, " result from the channel for single function!")
 
-	// ============ Multiple Functions Single Channel ================
+	// ============ Multiple Functions Single Channel await several times ================
 	var isDoneOneChannelMultiFunction = make(chan bool)
 	go fastFuncWithOneChannel("*async fast with channel* 1 call", isDoneOneChannelMultiFunction)
 	go slowOneFuncWithChannel("*slow async with channel* 2 function and await channel", isDoneOneChannelMultiFunction)
@@ -71,10 +71,10 @@ func main() {
 	<-isDoneOneChannelMultiFunction
 	<-isDoneOneChannelMultiFunction
 
-	// ============ Multiple Functions Single Channel with Slice ===================
+	// ============ Multiple Functions set of channels "Slice" ===================
 	var isDoneChannelSlice = make([]chan bool, 4)
 	isDoneChannelSlice[0] = make(chan bool)
-	go fastFuncWithOneChannel("*async fast with channel* 1 call", isDoneChannelSlice[0])
+	go fastFuncWithOneChannel("*async fast with channel* 1 function", isDoneChannelSlice[0])
 	isDoneChannelSlice[1] = make(chan bool)
 	go slowOneFuncWithChannel("*slow async with channel* 2 function and await channel", isDoneChannelSlice[1])
 	isDoneChannelSlice[2] = make(chan bool)
@@ -85,5 +85,18 @@ func main() {
 	// await all functions
 	for _, done := range isDoneChannelSlice {
 		<-done
+	}
+
+	// =============== Multiple functions with only 1 Channel and special syntax
+	var isDoneNewChannel = make(chan bool)
+	go fastFuncWithOneChannel("*async fast with channel* 1 call", isDoneNewChannel)
+	go slowOneFuncWithChannel("*slow async with channel* 2 function and await channel", isDoneNewChannel)
+
+	// *IMPORTANT* THIS APPROACH CAN BE USED ONLY IN SITUATIONS WHEN YOU KNOW THE LONGEST FUNCTION
+	// AND CAN use close(isDone) within the function
+	// OTHERWISE - DEADLOCK.
+	// It's because we do not know the exact number of channel usages to expect
+	for doneChannelItem := range isDoneNewChannel {
+		fmt.Println(doneChannelItem)
 	}
 }
