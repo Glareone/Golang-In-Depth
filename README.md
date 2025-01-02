@@ -42,4 +42,4 @@ This repository is for Golang-related materials with examples
 2. Backend Tricks
 
 # Backend API Project using latest trends
-1. [WebAPI using Gin, in progress](https://github.com/Glareone/Golang-Full-Course/tree/main/web-api)
+1. [WebAPI using Gin with Postman collection](https://github.com/Glareone/Golang-Full-Course/tree/main/web-api)
