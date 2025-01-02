@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "4933c26d-4b9e-43a4-ac89-5c67e877a703",
+		"name": "Golang & Gin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39808379",
+		"_collection_link": "https://hoda-team.postman.co/workspace/HODA-Team-Workspace~fa1861b7-b8b0-4d50-83d8-f91b24d6d6c1/collection/39808379-4933c26d-4b9e-43a4-ac89-5c67e877a703?action=share&source=collection_link&creator=39808379"
+	},
+	"item": [
+		{
+			"name": "Create Event",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Test event\",       \n\t\"description\": \"test event description\",\n\t\"location\": \"51.00, 49.00\",\n\t\"dateTime\": \"2025-01-01T15:30:00.000Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/events",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Events",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/events",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
