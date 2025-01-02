@@ -35,11 +35,11 @@ This repository is for Golang-related materials with examples
    - [Goroutines, Channels. Simple Examples with explanation](https://github.com/Glareone/Golang-Full-Course/blob/main/concurrency/main.go)
    - [Goroutines and Error Handling](https://github.com/Glareone/Golang-Full-Course/blob/main/goroutines-with-errors/main.go)  
    
-   
-10. For Intermediate
+# For Intermediate
+1. General
    - [Struct allocation on Stack and on Heap](in progress. Shortly - depends on pointer Escaping. If pointer never escapes the function - struct will be allocated on Stack. Otherwise on Heap)  
    - [custom types and aliases using type](https://github.com/Glareone/Golang-Full-Course/blob/main/structs-and-custom-types/user/custom_type.go)
-11. Backend Tricks
+2. Backend Tricks
 
 # Backend API Project using latest trends
-12. (WebAPI using Gin, in progress)
+1. [WebAPI using Gin, in progress](https://github.com/Glareone/Golang-Full-Course/tree/main/web-api)
