@@ -13,7 +13,7 @@ import (
 var DB *sql.DB
 
 func InitDatabase() {
-	var password = "<INSERT YOUR PASSWORD>"
+	var password = "<SET YOUR DATABASE PASSWORD HERE>"
 	var err error
 
 	var connectionStringPostgres = fmt.Sprintf("postgres://postgres:%s@localhost:5432/gin-web-api", password)
@@ -51,6 +51,6 @@ func createTables() {
 
 	_, err := DB.Exec(createTableEvents)
 	if err != nil {
-		panic("Migration has not been applied properly")
+		panic(fmt.Sprintf("Migration has not been applied properly", err))
 	}
 }

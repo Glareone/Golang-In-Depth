@@ -1,6 +1,6 @@
 module web-api
 
-go 1.23.0
+go 1.23
 
 require (
 	github.com/bytedance/sonic v1.12.6 // indirect
