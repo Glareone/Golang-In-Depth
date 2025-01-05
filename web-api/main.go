@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"web-api/database"
 	"web-api/models"
 )
 
@@ -10,6 +11,9 @@ func main() {
 	// setup the "Engine" (HTTP SERVER) with Logger and Recovery middleware
 	// Recovery - recovers from crashes if they are not entire server crashes
 	var server = gin.Default()
+
+	// initialize Database Connection
+	database.InitDatabase()
 
 	// handlers registration
 	server.GET("/events", getEvents)
