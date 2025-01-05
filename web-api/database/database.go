@@ -7,16 +7,24 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/jackc/pgx/v5/stdlib" // Import the adapter
+	"os"
 )
 
 // DB global variable of Database to be used elsewhere in this application
 var DB *sql.DB
 
 func InitDatabase() {
-	var password = "<INSERT YOUR PASSWORD>"
 	var err error
 
-	var connectionStringPostgres = fmt.Sprintf("postgres://postgres:%s@localhost:5432/gin-web-api", password)
+	// Get environment variables
+	var dbHost = os.Getenv("DB_HOST")
+	var dbPort = os.Getenv("DB_PORT")
+	var dbUser = os.Getenv("DB_USER")
+	var dbPassword = os.Getenv("DB_PASSWORD")
+	var dbName = os.Getenv("DB_NAME")
+
+	// Construct connection string using environment variables
+	var connectionStringPostgres = fmt.Sprintf("postgres://%s:%s@%s:%s/%s", dbUser, dbPassword, dbHost, dbPort, dbName)
 
 	DB, err = sql.Open("pgx", connectionStringPostgres)
 	if err != nil {
@@ -34,10 +42,10 @@ func InitDatabase() {
 	defer DB.Close()
 
 	// migrations
-	createTables()
+	migrationsCreateTables()
 }
 
-func createTables() {
+func migrationsCreateTables() {
 	var createTableEvents = `
 		CREATE TABLE IF NOT EXISTS events (
                                       id SERIAL PRIMARY KEY,
@@ -51,6 +59,6 @@ func createTables() {
 
 	_, err := DB.Exec(createTableEvents)
 	if err != nil {
-		panic("Migration has not been applied properly")
+		panic(fmt.Sprintf("Migration has not been applied properly", err))
 	}
 }
