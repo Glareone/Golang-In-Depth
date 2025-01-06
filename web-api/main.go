@@ -44,7 +44,10 @@ func getEvents(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(
 			http.StatusBadRequest,
-			events)
+			gin.H{
+				"message": "Events cannot be read, error",
+				"error":   err,
+			})
 		return
 	}
 
@@ -63,7 +66,12 @@ func createEvent(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&eventModel)
 
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, "Could not parse Event during Event Creation")
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"message": "Could not parse Event during Event Creation",
+				"error":   err,
+			})
 		// we must use return here otherwise the code below will be executed anyway despite the error we send back
 		return
 	}
@@ -76,8 +84,8 @@ func createEvent(ctx *gin.Context) {
 		ctx.JSON(
 			http.StatusBadRequest,
 			gin.H{
-				"message": "event created and stored",
-				"event":   eventModel,
+				"message": "event cannot be saved",
+				"error":   err,
 			})
 	}
 
