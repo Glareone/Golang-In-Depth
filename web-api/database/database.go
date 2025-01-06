@@ -38,9 +38,6 @@ func InitDatabase() {
 	// number of connections could simultaneously be opened
 	DB.SetMaxOpenConns(10)
 
-	// we state that connection should be closed once the function context ended (it's ended at "}" of this function)
-	defer DB.Close()
-
 	// migrations
 	migrationsCreateTables()
 }
