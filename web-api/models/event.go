@@ -27,6 +27,11 @@ func (e *Event) Save() error {
 
 	// prepare the query statement
 	// used to inject parameters
+	// PERFORMANCE TIP:
+	// Prepare() prepares a SQL statement - this can lead to better performance if the same statement is executed 
+	// multiple times (potentially with different data for its placeholders).
+	// This is only true, if the prepared statement is not closed (stmt.Close()) in between those executions.
+	// In that case, there wouldn't be any advantages.
 	var statement, err = database.DB.Prepare(query)
 
 	if err != nil {
@@ -62,6 +67,8 @@ func GetAllEvents() ([]Event, error) {
 	query := "SELECT * FROM events"
 	// we still can use prepare here, but SELECT * is pretty simple sql call, so we do not prepare it
 	// and we do not store it in pgx memory
+	// This is only true, if the prepared statement is not closed (stmt.Close()) in between those executions.
+	// In that case, there wouldn't be any advantages.
 
 	eventRows, err := database.DB.QueryContext(context.Background(), query)
 
