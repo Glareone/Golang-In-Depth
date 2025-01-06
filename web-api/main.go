@@ -38,11 +38,18 @@ func main() {
 }
 
 // context will be sent by Gin automatically if this function is registered as handler in server.GET()
-func getEvents(context *gin.Context) {
-	var events = models.GetAllEvents()
+func getEvents(ctx *gin.Context) {
+	var events, err = models.GetAllEvents()
+
+	if err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			events)
+		return
+	}
 
 	// instead of returning anything from this function we have to use JSON method of the context
-	context.JSON(
+	ctx.JSON(
 		http.StatusOK,
 		events)
 }
@@ -53,7 +60,7 @@ func createEvent(ctx *gin.Context) {
 	// map the json body to Event type and store it in eventModel variable
 	// gin by default does not complain if any fields missing, it will mark them as nil
 	// but we use `binding:required` tags on our properties to mark which of them are mandatory
-	var err = ctx.ShouldBindJSON(&eventModel)
+	err := ctx.ShouldBindJSON(&eventModel)
 
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, "Could not parse Event during Event Creation")
@@ -64,7 +71,15 @@ func createEvent(ctx *gin.Context) {
 	eventModel.Id = 1
 	eventModel.UserId = 1
 
-	eventModel.Save()
+	err = eventModel.Save()
+	if err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"message": "event created and stored",
+				"event":   eventModel,
+			})
+	}
 
 	ctx.JSON(http.StatusCreated, gin.H{
 		"message": "event created and stored",

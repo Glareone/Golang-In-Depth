@@ -58,6 +58,29 @@ func (e *Event) Save() error {
 }
 
 // normal function, not a method of *Event
-func GetAllEvents() []Event {
-	return events
+func GetAllEvents() ([]Event, error) {
+	query := "SELECT * FROM events"
+	// we still can use prepare here, but SELECT * is pretty simple sql call, so we do not prepare it
+	// and we do not store it in pgx memory
+
+	eventRows, err := database.DB.QueryContext(context.Background(), query)
+
+	if err != nil {
+		return nil, fmt.Errorf("error saving event: %w", err)
+	}
+
+	// prevent further enumeration
+	defer eventRows.Close()
+
+	for eventRows.Next() {
+		var event Event
+		err := eventRows.Scan(&event.Id, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserId)
+		if err != nil {
+			return nil, fmt.Errorf("error scanning and populating event collection: %w", err)
+		}
+
+		events = append(events, event)
+	}
+
+	return events, nil
 }
