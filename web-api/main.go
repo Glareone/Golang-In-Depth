@@ -1,10 +1,13 @@
 package main
 
 import (
+	"database/sql"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
+	"strconv"
 	"web-api/database"
 	"web-api/models"
 )
@@ -32,6 +35,7 @@ func main() {
 
 	// handlers registration
 	server.GET("/events", getEvents)
+	server.GET("/events/:id", getEventById)
 	server.POST("/events", createEvent)
 
 	server.Run(":8080") // localhost:8080
@@ -55,6 +59,48 @@ func getEvents(ctx *gin.Context) {
 	ctx.JSON(
 		http.StatusOK,
 		events)
+}
+
+func getEventById(ctx *gin.Context) {
+	// Get the "eventId" query parameter
+	eventIdStr := ctx.Param("id")
+
+	// Convert the ID to an integer
+	eventId, err := strconv.ParseInt(eventIdStr, 10, 64)
+
+	if err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"message": "Id could not be parsed",
+				"error":   err,
+			})
+		return
+	}
+
+	event, err := models.GetEventById(eventId)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			ctx.JSON(
+				http.StatusNotFound,
+				gin.H{
+					"message": "event with this Id is not found",
+					"error":   err,
+				})
+			return
+		} else {
+			ctx.JSON(
+				http.StatusBadRequest,
+				gin.H{
+					"message": "something went wrong",
+					"error":   err.Error(),
+				})
+			return
+		}
+	}
+
+	ctx.JSON(http.StatusOK, event)
 }
 
 func createEvent(ctx *gin.Context) {
