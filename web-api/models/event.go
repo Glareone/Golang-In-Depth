@@ -2,6 +2,8 @@ package models
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 	"fmt"
 	"time"
 	"web-api/database"
@@ -27,6 +29,11 @@ func (e *Event) Save() error {
 
 	// prepare the query statement
 	// used to inject parameters
+	// PERFORMANCE TIP:
+	// Prepare() prepares a SQL statement - this can lead to better performance if the same statement is executed
+	// multiple times (potentially with different data for its placeholders).
+	// This is only true, if the prepared statement is not closed (stmt.Close()) in between those executions.
+	// In that case, there wouldn't be any advantages.
 	var statement, err = database.DB.Prepare(query)
 
 	if err != nil {
@@ -62,6 +69,8 @@ func GetAllEvents() ([]Event, error) {
 	query := "SELECT * FROM events"
 	// we still can use prepare here, but SELECT * is pretty simple sql call, so we do not prepare it
 	// and we do not store it in pgx memory
+	// This is only true, if the prepared statement is not closed (stmt.Close()) in between those executions.
+	// In that case, there wouldn't be any advantages.
 
 	eventRows, err := database.DB.QueryContext(context.Background(), query)
 
@@ -83,4 +92,34 @@ func GetAllEvents() ([]Event, error) {
 	}
 
 	return events, nil
+}
+
+func GetEventById(eventId int64) (Event, error) {
+	query := `SELECT *
+			FROM events e
+			WHERE e.Id = $1
+			LIMIT 1` // Use LIMIT 1 instead of TOP(1) in PostgreSQL
+
+	statement, err := database.DB.Prepare(query)
+
+	defer statement.Close()
+
+	if err != nil {
+		return Event{}, fmt.Errorf("query preparation failed raising the following error: %w", err)
+	}
+
+	var event Event
+	err = statement.QueryRowContext(context.Background(), eventId).Scan(
+		&event.Id, &event.Name,
+		&event.Description, &event.Location,
+		&event.DateTime, &event.UserId)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return Event{}, fmt.Errorf("event not found: %w", err) // Specific error for not found
+		}
+		return Event{}, fmt.Errorf("query execution failed raising the error: %w", err)
+	}
+
+	return event, nil
 }

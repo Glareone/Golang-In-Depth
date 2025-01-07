@@ -4,9 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
-	"net/http"
 	"web-api/database"
-	"web-api/models"
+	"web-api/routes"
 )
 
 func main() {
@@ -30,66 +29,7 @@ func main() {
 	// we also can manage connections manually calling defer database.DB.conn.Close(), but it's less common practice
 	defer database.DB.Close()
 
-	// handlers registration
-	server.GET("/events", getEvents)
-	server.POST("/events", createEvent)
+	routes.RegisterRoutes(server)
 
 	server.Run(":8080") // localhost:8080
-}
-
-// context will be sent by Gin automatically if this function is registered as handler in server.GET()
-func getEvents(ctx *gin.Context) {
-	var events, err = models.GetAllEvents()
-
-	if err != nil {
-		ctx.JSON(
-			http.StatusBadRequest,
-			gin.H{
-				"message": "Events cannot be read, error",
-				"error":   err,
-			})
-		return
-	}
-
-	// instead of returning anything from this function we have to use JSON method of the context
-	ctx.JSON(
-		http.StatusOK,
-		events)
-}
-
-func createEvent(ctx *gin.Context) {
-	var eventModel models.Event
-
-	// map the json body to Event type and store it in eventModel variable
-	// gin by default does not complain if any fields missing, it will mark them as nil
-	// but we use `binding:required` tags on our properties to mark which of them are mandatory
-	err := ctx.ShouldBindJSON(&eventModel)
-
-	if err != nil {
-		ctx.JSON(
-			http.StatusBadRequest,
-			gin.H{
-				"message": "Could not parse Event during Event Creation",
-				"error":   err,
-			})
-		// we must use return here otherwise the code below will be executed anyway despite the error we send back
-		return
-	}
-
-	eventModel.Id = 1
-	eventModel.UserId = 1
-
-	err = eventModel.Save()
-	if err != nil {
-		ctx.JSON(
-			http.StatusBadRequest,
-			gin.H{
-				"message": "event cannot be saved",
-				"error":   err,
-			})
-	}
-
-	ctx.JSON(http.StatusCreated, gin.H{
-		"message": "event created and stored",
-		"event":   eventModel})
 }
