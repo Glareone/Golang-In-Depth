@@ -18,7 +18,7 @@ func getEvents(ctx *gin.Context) {
 			http.StatusBadRequest,
 			gin.H{
 				"message": "Events cannot be read, error",
-				"error":   err,
+				"error":   err.Error(),
 			})
 		return
 	}
@@ -41,7 +41,7 @@ func getEventById(ctx *gin.Context) {
 			http.StatusBadRequest,
 			gin.H{
 				"message": "Id could not be parsed",
-				"error":   err,
+				"error":   err.Error(),
 			})
 		return
 	}
@@ -54,7 +54,7 @@ func getEventById(ctx *gin.Context) {
 				http.StatusNotFound,
 				gin.H{
 					"message": "event with this Id is not found",
-					"error":   err,
+					"error":   err.Error(),
 				})
 			return
 		} else {
@@ -84,7 +84,7 @@ func createEvent(ctx *gin.Context) {
 			http.StatusBadRequest,
 			gin.H{
 				"message": "Could not parse Event during Event Creation",
-				"error":   err,
+				"error":   err.Error(),
 			})
 		// we must use return here otherwise the code below will be executed anyway despite the error we send back
 		return
@@ -99,7 +99,7 @@ func createEvent(ctx *gin.Context) {
 			http.StatusBadRequest,
 			gin.H{
 				"message": "event cannot be saved",
-				"error":   err,
+				"error":   err.Error(),
 			})
 	}
 
