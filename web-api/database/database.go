@@ -7,6 +7,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/jackc/pgx/v5/stdlib" // Import the adapter
+	"log"
 	"os"
 )
 
@@ -38,24 +39,40 @@ func InitDatabase() {
 	// number of connections could simultaneously be opened
 	DB.SetMaxOpenConns(10)
 
-	// migrations
+	// Create Tables
 	migrationsCreateTables()
+
+	// All Further modifications run here
+	migrationsAlterTables()
 }
 
 func migrationsCreateTables() {
-	var createTableEvents = `
-		CREATE TABLE IF NOT EXISTS events (
-                                      id SERIAL PRIMARY KEY,
-                                      name TEXT NOT NULL,
-                                      description TEXT NOT NULL,
-                                      location TEXT NOT NULL,
-                                      dateTime TIMESTAMP NOT NULL,
-                                      user_id INTEGER
+	var createTableUsers = `
+		CREATE TABLE IF NOT EXISTS users (
+			id SERIAL PRIMARY KEY,
+			email TEXT NOT NULL UNIQUE,
+			passwordHash TEXT NOT NULL
 		)
 	`
 
-	_, err := DB.Exec(createTableEvents)
+	var createTableEvents = `
+		CREATE TABLE IF NOT EXISTS events (
+        	id SERIAL PRIMARY KEY,
+        	name TEXT NOT NULL,
+            description TEXT NOT NULL,
+            location TEXT NOT NULL,
+            dateTime TIMESTAMP NOT NULL,
+        	user_id INTEGER
+		)
+	`
+
+	_, err := DB.Exec(createTableUsers)
 	if err != nil {
-		panic(fmt.Sprintf("Migration has not been applied properly", err))
+		log.Fatalf("[Migration] Users table has not been created properly: %w", err)
+	}
+
+	_, err = DB.Exec(createTableEvents)
+	if err != nil {
+		log.Fatalf("[Migration] Events table has not been created properly: %w", err)
 	}
 }
