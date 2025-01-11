@@ -107,3 +107,72 @@ func createEvent(ctx *gin.Context) {
 		"message": "event created and stored",
 		"event":   eventModel})
 }
+
+func updateEvent(ctx *gin.Context) {
+	// Get the "eventId" query parameter
+	eventIdStr := ctx.Param("id")
+
+	// Convert the ID to an integer
+	eventId, err := strconv.ParseInt(eventIdStr, 10, 64)
+
+	if err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"message": "Id could not be parsed",
+				"error":   err.Error(),
+			})
+		return
+	}
+
+	_, err = models.GetEventById(eventId)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			ctx.JSON(
+				http.StatusNotFound,
+				gin.H{
+					"message": "event with this Id is not found",
+					"error":   err.Error(),
+				})
+			return
+		} else {
+			ctx.JSON(
+				http.StatusBadRequest,
+				gin.H{
+					"message": "something went wrong",
+					"error":   err.Error(),
+				})
+			return
+		}
+	}
+
+	var updatedEvent models.Event
+	err = ctx.ShouldBindJSON(&updatedEvent)
+
+	if err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"message": "invalid data submitted in the body",
+				"error":   err.Error(),
+			})
+		return
+	}
+
+	// set the ID of the event we get from the database
+	updatedEvent.Id = eventId
+	err = updatedEvent.UpdateEvent()
+
+	if err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"message": "sql update process failed",
+				"error":   err.Error(),
+			})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, updatedEvent)
+}

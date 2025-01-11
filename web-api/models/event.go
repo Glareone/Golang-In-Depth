@@ -34,7 +34,8 @@ func (e *Event) Save() error {
 	// multiple times (potentially with different data for its placeholders).
 	// This is only true, if the prepared statement is not closed (stmt.Close()) in between those executions.
 	// In that case, there wouldn't be any advantages.
-	var statement, err = database.DB.Prepare(query)
+	// PS recommended to use PrepareContext to handle cancellations
+	var statement, err = database.DB.PrepareContext(context.Background(), query)
 
 	if err != nil {
 		return fmt.Errorf("error preparing statement: %w", err)
@@ -55,10 +56,34 @@ func (e *Event) Save() error {
 	// even if you're not explicitly setting any deadlines or cancellation signals in this specific example.
 	//
 	// .Scan(&e.Id) - to setup Id to Event struct and to avoid using LastInsertId method (which is not supported by pgx driver)
+	// you have to use QueryRow together with Scan in order to retrieve Id of inserted element back
 	err = statement.QueryRowContext(context.Background(),
 		e.Name, e.Description, e.Location, e.DateTime, e.UserId).Scan(&e.Id)
 	if err != nil {
 		return fmt.Errorf("error saving event: %w", err)
+	}
+
+	return nil
+}
+
+func (e *Event) UpdateEvent() error {
+	query := `
+		UPDATE events e
+		SET name = $1, description = $2, location = $3, dateTime = $4
+		WHERE id = $5`
+
+	statement, err := database.DB.PrepareContext(context.Background(), query)
+
+	if err != nil {
+		return fmt.Errorf("error prepare statement for updating the event failed: %w", err)
+	}
+
+	defer statement.Close()
+
+	_, err = statement.ExecContext(context.Background(), e.Name, e.Description, e.Location, e.DateTime, e.Id)
+
+	if err != nil {
+		return fmt.Errorf("error updating the event: %w", err)
 	}
 
 	return nil
