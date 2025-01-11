@@ -75,14 +75,67 @@
 					}
 				],
 				"url": {
-					"raw": "localhost:8080/events/3",
+					"raw": "localhost:8080/events/:id",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"events",
-						"3"
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update the event by Id",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"(PUT) UPDATED Event Save 11 Jan 2025\",       \n\t\"description\": \"test event description Update 11 Jan 2025\",\n\t\"location\": \"51.00, 49.00\",\n\t\"dateTime\": \"2025-01-01T15:30:00.000Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/events/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"events",
+						":id"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": null,
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "3"
+						}
 					]
 				}
 			},
