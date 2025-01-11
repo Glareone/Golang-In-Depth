@@ -89,6 +89,42 @@ func (e *Event) UpdateEvent() error {
 	return nil
 }
 
+func DeleteEventTransactional(eventId int64) error {
+	// start transaction with default level of isolation
+	transaction, err := database.DB.Begin()
+	if err != nil {
+		return fmt.Errorf("transaction cannot be started: %w", err)
+	}
+
+	defer transaction.Rollback()
+
+	query := `
+		DELETE
+		FROM events
+		WHERE id = $1
+	`
+
+	result, err := transaction.ExecContext(context.Background(), query, eventId)
+
+	if err != nil {
+		return fmt.Errorf("error during deleting the event: %w", err)
+	}
+
+	rowsAffected, err := result.RowsAffected()
+
+	if rowsAffected == 0 {
+		return fmt.Errorf("no event found with ID %d", eventId)
+	}
+
+	err = transaction.Commit()
+
+	if err != nil {
+		return fmt.Errorf("issue with committing the transaction %w", err)
+	}
+
+	return nil
+}
+
 // normal function, not a method of *Event
 func GetAllEvents() ([]Event, error) {
 	query := "SELECT * FROM events"

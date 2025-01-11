@@ -176,3 +176,35 @@ func updateEvent(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, updatedEvent)
 }
+
+func deleteEvent(ctx *gin.Context) {
+	// Get the "eventId" query parameter
+	eventIdStr := ctx.Param("id")
+
+	// Convert the ID to an integer
+	eventId, err := strconv.ParseInt(eventIdStr, 10, 64)
+
+	if err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"message": "Id could not be parsed",
+				"error":   err.Error(),
+			})
+		return
+	}
+
+	err = models.DeleteEventTransactional(eventId)
+
+	if err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"message": "Event deletion raised an error",
+				"error":   err.Error(),
+			})
+		return
+	}
+
+	ctx.Status(http.StatusNoContent)
+}
