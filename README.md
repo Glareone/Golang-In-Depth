@@ -46,3 +46,4 @@ This repository is for Golang-related materials with examples
 2. [WebAPI Gin with Docker and docker-compose](https://github.com/Glareone/Golang-WebApi-Serverless-and-Basics/blob/main/web-api/docker-compose.yml)
 3. Golang meets Azure Function (in progress)
 4. Golang meets GraphQL (in progress)
+5. Golang with PGX and GORM vs EntityFramework with LINQ (in progress)
