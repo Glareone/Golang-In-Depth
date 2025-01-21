@@ -44,6 +44,7 @@ This repository is for Golang-related materials with examples
 # Backend API Project using latest trends
 1. [WebAPI using Gin with Postman collection](https://github.com/Glareone/Golang-Full-Course/tree/main/web-api)
 2. [WebAPI Gin with Docker and docker-compose](https://github.com/Glareone/Golang-WebApi-Serverless-and-Basics/blob/main/web-api/docker-compose.yml)
-3. Golang meets Azure Function (in progress)
-4. Golang meets GraphQL (in progress)
-5. Golang with PGX and GORM vs EntityFramework with LINQ (in progress)
+3. [GORM meets webAPI. AutoMigrate, Anemic Model, Services](https://github.com/Glareone/Golang-In-Depth-WebAPI-Serverless-Docker/tree/main/web-api-gorm)
+4. Golang meets Azure Function (in progress)
+5. Golang meets GraphQL (in progress)
+6. Golang with PGX and GORM vs EntityFramework with LINQ (in progress)
