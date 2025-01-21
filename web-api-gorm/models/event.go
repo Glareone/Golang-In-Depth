@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"fmt"
 	"gorm.io/gorm"
 	"time"
@@ -64,32 +65,18 @@ func GetAllEvents() ([]Event, error) {
 	return events, nil
 }
 
-//func GetEventById(eventId int64) (Event, error) {
-//	query := `SELECT *
-//			FROM events e
-//			WHERE e.Id = $1
-//			LIMIT 1` // Use LIMIT 1 instead of TOP(1) in PostgreSQL
-//
-//	statement, err := database.DB.Prepare(query)
-//
-//	defer statement.Close()
-//
-//	if err != nil {
-//		return Event{}, fmt.Errorf("query preparation failed raising the following error: %w", err)
-//	}
-//
-//	var event Event
-//	err = statement.QueryRowContext(context.Background(), eventId).Scan(
-//		&event.Id, &event.Name,
-//		&event.Description, &event.Location,
-//		&event.DateTime, &event.UserId)
-//
-//	if err != nil {
-//		if errors.Is(err, sql.ErrNoRows) {
-//			return Event{}, fmt.Errorf("event not found: %w", err) // Specific error for not found
-//		}
-//		return Event{}, fmt.Errorf("query execution failed raising the error: %w", err)
-//	}
-//
-//	return event, nil
-//}
+func GetEventById(eventId int64) (*Event, error) {
+	var event Event
+
+	result := database.DB.First(&event, eventId)
+
+	// Check for errors, including "record not found"
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return nil, fmt.Errorf("event is not found: %w", result.Error)
+		}
+		return nil, fmt.Errorf("error getting event by ID: %w", result.Error)
+	}
+
+	return &event, nil
+}
