@@ -5,7 +5,7 @@ import (
 )
 
 func migrationsAlterTables() {
-	// this migration commented because otherwise I need to prepare the whole mechanism 
+	// this migration commented because otherwise I need to prepare the whole mechanism
 	// or use GORM to track migrations in the separate table
 	// Jan_11_2025_AlterEventsTable()
 }
