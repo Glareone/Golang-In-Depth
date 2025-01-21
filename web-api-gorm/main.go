@@ -24,11 +24,6 @@ func main() {
 	// initialize Database Connection
 	database.InitDatabase()
 
-	// Close the connection when the application shuts down
-	// we dont need to close connection pool each time
-	// we also can manage connections manually calling defer database.DB.conn.Close(), but it's less common practice
-	defer database.DB.Close()
-
 	routes.RegisterRoutes(server)
 
 	server.Run(":8080") // localhost:8080

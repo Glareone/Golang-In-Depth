@@ -6,12 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
-	"web-api/models"
+	"web-api/domain"
+	"web-api/services"
 )
 
 // context will be sent by Gin automatically if this function is registered as handler in server.GET()
 func getEvents(ctx *gin.Context) {
-	var events, err = models.GetAllEvents()
+	eventService := services.NewEventService()
+	var domainEvents, err = eventService.GetAllEvents()
 
 	if err != nil {
 		ctx.JSON(
@@ -26,7 +28,7 @@ func getEvents(ctx *gin.Context) {
 	// instead of returning anything from this function we have to use JSON method of the context
 	ctx.JSON(
 		http.StatusOK,
-		events)
+		domainEvents)
 }
 
 func getEventById(ctx *gin.Context) {
@@ -46,7 +48,8 @@ func getEventById(ctx *gin.Context) {
 		return
 	}
 
-	event, err := models.GetEventById(eventId)
+	eventService := services.NewEventService()
+	event, err := eventService.GetEventById(eventId)
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -72,12 +75,12 @@ func getEventById(ctx *gin.Context) {
 }
 
 func createEvent(ctx *gin.Context) {
-	var eventModel models.Event
+	var event domain.Event
 
-	// map the json body to Event type and store it in eventModel variable
+	// map the json body to domain.Event type and store it in eventModel variable
 	// gin by default does not complain if any fields missing, it will mark them as nil
 	// but we use `binding:required` tags on our properties to mark which of them are mandatory
-	err := ctx.ShouldBindJSON(&eventModel)
+	err := ctx.ShouldBindJSON(&event)
 
 	if err != nil {
 		ctx.JSON(
@@ -90,10 +93,9 @@ func createEvent(ctx *gin.Context) {
 		return
 	}
 
-	eventModel.Id = 1
-	eventModel.UserId = 1
+	eventService := services.NewEventService()
+	createdEvent, err := eventService.CreateEvent(&event)
 
-	err = eventModel.Save()
 	if err != nil {
 		ctx.JSON(
 			http.StatusBadRequest,
@@ -101,11 +103,12 @@ func createEvent(ctx *gin.Context) {
 				"message": "event cannot be saved",
 				"error":   err.Error(),
 			})
+		return
 	}
 
 	ctx.JSON(http.StatusCreated, gin.H{
 		"message": "event created and stored",
-		"event":   eventModel})
+		"event":   createdEvent})
 }
 
 func updateEvent(ctx *gin.Context) {
@@ -125,7 +128,8 @@ func updateEvent(ctx *gin.Context) {
 		return
 	}
 
-	_, err = models.GetEventById(eventId)
+	eventService := services.NewEventService()
+	_, err = eventService.GetEventById(eventId)
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -147,7 +151,7 @@ func updateEvent(ctx *gin.Context) {
 		}
 	}
 
-	var updatedEvent models.Event
+	var updatedEvent domain.Event
 	err = ctx.ShouldBindJSON(&updatedEvent)
 
 	if err != nil {
@@ -161,8 +165,8 @@ func updateEvent(ctx *gin.Context) {
 	}
 
 	// set the ID of the event we get from the database
-	updatedEvent.Id = eventId
-	err = updatedEvent.UpdateEvent()
+	updatedEvent.ID = eventId
+	err = eventService.UpdateEvent(&updatedEvent)
 
 	if err != nil {
 		ctx.JSON(
@@ -194,7 +198,8 @@ func deleteEvent(ctx *gin.Context) {
 		return
 	}
 
-	err = models.DeleteEventTransactional(eventId)
+	eventService := services.NewEventService()
+	err = eventService.DeleteEventById(eventId)
 
 	if err != nil {
 		ctx.JSON(
