@@ -43,6 +43,7 @@ This repository is for Golang-related materials with examples
 2. Backend Tricks
 
 # Backend API Project using latest trends
+0. [Gin Templating](https://pkg.go.dev/github.com/leslieleung/gin-application-template#section-readme)  
 1. [WebAPI using Gin with Postman collection](https://github.com/Glareone/Golang-Full-Course/tree/main/web-api)
 2. [WebAPI Gin with Docker and docker-compose](https://github.com/Glareone/Golang-WebApi-Serverless-and-Basics/blob/main/web-api/docker-compose.yml)
 3. [GORM meets webAPI. AutoMigrate, Anemic Model, Services](https://github.com/Glareone/Golang-In-Depth-WebAPI-Serverless-Docker/tree/main/web-api-gorm)
